@@ -5,7 +5,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -52,27 +52,44 @@ function CustomDrawerContent({progress, navigation, ...rest}) {
         <View style={styles.botcontainer}>
           {Data.map(data => {
             return (
-              <Card style={styles.drawerCards}>
-                <Icons
-                  name={
-                    data.title === 'Settings'
-                      ? 'ios-settings'
-                      : data.title === 'About'
-                      ? 'ios-people'
-                      : data.title === 'Profile'
-                      ? 'ios-briefcase'
-                      : data.title === 'Offering'
-                      ? 'ios-cash'
-                      : data.title === 'Notification'
-                      ? 'ios-notifications'
-                      : data.title === 'Events'
-                      ? 'ios-calendar'
-                      : 'ios-people'
-                  }
-                  size={60}
-                />
-                <Text style={styles.Label}>{data.title}</Text>
-              </Card>
+              <TouchableOpacity
+                onPress={() => {
+                  data.title === 'About'
+                    ? navigation.navigate('About')
+                    : data.title === 'Profile'
+                    ? navigation.navigate('Profile')
+                    : data.title === 'Settings'
+                    ? navigation.navigate('Settings')
+                    : data.title === 'Events'
+                    ? navigation.navigate('Events')
+                    : data.title === 'Church Units'
+                    ? navigation.navigate('Units')
+                    : data.title === 'Beacon'
+                    ? navigation.navigate('Beacon')
+                    : '';
+                }}>
+                <Card style={styles.drawerCards}>
+                  <Icons
+                    name={
+                      data.title === 'Settings'
+                        ? 'ios-settings'
+                        : data.title === 'About'
+                        ? 'ios-people'
+                        : data.title === 'Profile'
+                        ? 'ios-briefcase'
+                        : data.title === 'Offering'
+                        ? 'ios-cash'
+                        : data.title === 'Notification'
+                        ? 'ios-notifications'
+                        : data.title === 'Events'
+                        ? 'ios-calendar'
+                        : 'ios-people'
+                    }
+                    size={60}
+                  />
+                  <Text style={styles.Label}>{data.title}</Text>
+                </Card>
+              </TouchableOpacity>
             );
           })}
         </View>

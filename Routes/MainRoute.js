@@ -14,6 +14,9 @@ import PodcastRoute from './PodcastRoute';
 import EventRoute from './EventsRoute';
 import UnitsRoute from './UnitsRoute';
 import BeaconRoute from './BeaconRoute';
+import AboutRoute from './AboutRoute';
+import ProfileRoute from './ProfileRoute';
+import SettingsRoute from './SettingsRoute';
 
 const Stack = createStackNavigator();
 
@@ -100,6 +103,27 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={BeaconRoute}
+      />
+      <Stack.Screen
+        name="About"
+        options={{
+          headerShown: false,
+        }}
+        component={AboutRoute}
+      />
+      <Stack.Screen
+        name="Profile"
+        options={{
+          headerShown: false,
+        }}
+        component={ProfileRoute}
+      />
+      <Stack.Screen
+        name="Settings"
+        options={{
+          headerShown: false,
+        }}
+        component={SettingsRoute}
       />
     </Stack.Navigator>
   );
