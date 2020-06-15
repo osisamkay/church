@@ -6,6 +6,8 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import {
   heightPercentageToDP,
@@ -16,33 +18,41 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
 import {churchData} from '../Components/churchUnitData';
 
-export default function Units() {
+export default function Units({navigation}) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
           {churchData.map(data => {
             return (
-              <Card style={styles.card}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={require('../../assets/churchLogo.png')}
-                    style={styles.image}
-                    resizeMode="stretch"
-                  />
-                </View>
-                <View style={styles.details}>
-                  <View>
-                    <Text style={styles.title}>{data.title}</Text>
-                    <Text
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('unitDetails', {
+                    detail: data.desc,
+                    title: data.title,
+                  });
+                }}>
+                <Card style={styles.card}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={require('../../assets/churchLogo.png')}
+                      style={styles.image}
+                      resizeMode="stretch"
+                    />
+                  </View>
+                  <View style={styles.details}>
+                    <View>
+                      <Text style={styles.title}>{data.title}</Text>
+                      {/* <Text
                       //   numberOfLines={3}
                       //   ellipsizeMode="tail"
                       style={styles.body}>
                       {data.desc}
-                    </Text>
+                    </Text> */}
+                    </View>
                   </View>
-                </View>
-              </Card>
+                </Card>
+              </TouchableOpacity>
             );
           })}
         </View>
@@ -56,14 +66,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    height: heightPercentageToDP('20%'),
-    width: widthPercentageToDP('40%'),
+    height: heightPercentageToDP('8%'),
+    width: widthPercentageToDP('18%'),
     // backgroundColor: 'grey',
     padding: 7,
   },
   image: {
-    height: heightPercentageToDP('18%'),
-    width: widthPercentageToDP('40%'),
+    height: heightPercentageToDP('6%'),
+    width: widthPercentageToDP('18%'),
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 3,

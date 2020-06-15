@@ -9,6 +9,7 @@ import {
   heightPercentageToDP,
 } from 'react-native-responsive-screen';
 import Units from '../src/Screens/Units';
+import UnitDetails from '../src/Screens/UnitDetails';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,34 @@ function UnitsRoute({navigation}) {
           ),
         }}
         component={Units}
+      />
+      <Stack.Screen
+        name="unitDetails"
+        options={{
+          title: 'Units',
+          headerTintColor: '#fff',
+          headerStyle: {
+            // backgroundColor:"#000"
+            backgroundColor: '#000',
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('HomePages');
+              }}>
+              <Image
+                source={require('../assets//output-onlinepngtools.png')}
+                style={{
+                  width: widthPercentageToDP('30%'),
+                  height: heightPercentageToDP('6Z%'),
+                  // paddingRight: 23,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          ),
+        }}
+        component={UnitDetails}
       />
     </Stack.Navigator>
   );

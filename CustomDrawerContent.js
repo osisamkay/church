@@ -62,8 +62,8 @@ function CustomDrawerContent({progress, navigation, ...rest}) {
                     ? navigation.navigate('Settings')
                     : data.title === 'Events'
                     ? navigation.navigate('Events')
-                    : data.title === 'Church Units'
-                    ? navigation.navigate('Units')
+                    : data.title === 'Offering'
+                    ? navigation.navigate('Offering')
                     : data.title === 'Beacon'
                     ? navigation.navigate('Beacon')
                     : '';

@@ -17,6 +17,7 @@ import BeaconRoute from './BeaconRoute';
 import AboutRoute from './AboutRoute';
 import ProfileRoute from './ProfileRoute';
 import SettingsRoute from './SettingsRoute';
+import PaymentRoute from './PaymentRoute';
 
 const Stack = createStackNavigator();
 
@@ -124,6 +125,13 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={SettingsRoute}
+      />
+      <Stack.Screen
+        name="Offering"
+        options={{
+          headerShown: false,
+        }}
+        component={PaymentRoute}
       />
     </Stack.Navigator>
   );

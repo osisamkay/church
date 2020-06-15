@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import {
   heightPercentageToDP,
@@ -16,68 +17,47 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 import Iconss from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
 import YouTube from 'react-native-youtube';
+import {YouTubeStandaloneAndroid} from 'react-native-youtube';
 
 const data = [
   {
     title: "God's Love",
+    id: 'PNKCMlCyspk',
     desc:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
   },
   {
     title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Faithfulness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
+    id: 'glZLuHVqcOk',
     desc:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
   },
 ];
 
-const Devotional = () => {
+const Devotional = ({navigation}) => {
+  // const [id, setId] = useState(' ');
+
+  const Onclick = id => {
+    YouTubeStandaloneAndroid.playVideo({
+      apiKey: 'AIzaSyAM6yfUOmPL2D09Pubk3UYVB1Eruz3Bb5Q',
+      videoId: id, // YouTube video ID
+      autoplay: true, // Autoplay the video
+      startTime: 120, // Starting point of video (in seconds)
+    })
+      .then(() => console.log('Standalone Player Exited'))
+      .catch(errorMessage => console.error(errorMessage));
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <YouTube
-        apiKey="AIzaSyAM6yfUOmPL2D09Pubk3UYVB1Eruz3Bb5Q"
-        videoId="PNKCMlCyspk" // The YouTube video ID
-        play={false} // control playback of video with true/false
-        fullscreen={false} // control whether the video should play in fullscreen or inline
-        loop // control whether the video should loop when ended
-        // onReady={e => this.setState({isReady: true})}
-        // onChangeState={e => this.setState({status: e.state})}
-        // onChangeQuality={e => this.setState({quality: e.quality})}
-        // onError={e => alert(e.error)}
-        style={{
-          alignSelf: 'stretch',
-          height: heightPercentageToDP('30%'),
-        }}
-      />
       <ScrollView style={styles.container}>
         <View style={styles.group}>
           {data.map(data => {
             return (
-              <View style={styles.card}>
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => {
+                  Onclick(data.id);
+                }}>
                 <View style={styles.imageContainer}>
                   <Image
                     source={require('../../assets/Joshua-1-9.jpg')}
@@ -97,10 +77,16 @@ const Devotional = () => {
                   </View>
                   <View style={styles.next}>
                     <Iconss name="star-circle" size={40} />
-                    <Icons name="play-circle" size={40} />
+                    <Icons
+                      name="play-circle"
+                      size={40}
+                      onPress={() => {
+                        Onclick(data.id);
+                      }}
+                    />
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>

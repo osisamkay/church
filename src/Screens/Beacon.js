@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {
   heightPercentageToDP,
@@ -21,40 +22,11 @@ const data = [
     title: "God's Love",
     desc:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Faithfulness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+    source: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
   },
 ];
 
-export default function Beacon() {
+export default function Beacon({navigation}) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Item rounded style={styles.search}>
@@ -66,7 +38,10 @@ export default function Beacon() {
         <View style={styles.group}>
           {data.map(data => {
             return (
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('pdf');
+                }}>
                 <Card style={styles.card}>
                   <View style={styles.details}>
                     <View>
@@ -152,5 +127,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: widthPercentageToDP('30%'),
     alignItems: 'center',
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });

@@ -23,6 +23,7 @@ function App({navigation}) {
           backgroundColor: 'rgba(0,0,0,.45)',
           width: widthPercentageToDP('80%'),
         }}
+        drawerPosition="right"
         drawerContent={props => <CustomDrawerContent {...props} />}
         statusBarAnimation="fade">
         <Drawer.Screen

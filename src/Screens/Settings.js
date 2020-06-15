@@ -11,12 +11,20 @@ import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import {Avatar, CheckBox} from 'react-native-elements';
+import {Avatar, CheckBox, Input} from 'react-native-elements';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/AntDesign';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Inputs from '../Components/Inputs';
+import EditInfo from './EditInfo';
+import EditPassWord from './EditPassword';
 
 export default function Settings() {
   const [not, setNot] = useState(false);
+  const [view, setView] = useState(false);
+  const refRBSheet = useRef();
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
       <View>
@@ -33,11 +41,23 @@ export default function Settings() {
         <View style={styles.group}>
           <View style={styles.bodyContainer}>
             <Text style={styles.title}>Change Info</Text>
-            <Icon name="edit" color="#fff" size={20} />
+            <TouchableOpacity
+              onPress={() => {
+                setView(false);
+                refRBSheet.current.open();
+              }}>
+              <Icon name="edit" color="#fff" size={20} />
+            </TouchableOpacity>
           </View>
           <View style={styles.bodyContainer}>
             <Text style={styles.title}>Change Password</Text>
-            <Icon name="edit" color="#fff" size={20} />
+            <TouchableOpacity
+              onPress={() => {
+                setView(true);
+                refRBSheet.current.open();
+              }}>
+              <Icon name="edit" color="#fff" size={20} />
+            </TouchableOpacity>
           </View>
           <View style={styles.bodyContainer}>
             <Text style={styles.title}>Notification</Text>
@@ -54,6 +74,22 @@ export default function Settings() {
         </View>
         <Text style={styles.titleb}>Suspend or delete account</Text>
       </ScrollView>
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        height={heightPercentageToDP('50%')}
+        closeOnPressMask={false}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,.5)',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        {!view && <EditInfo close={() => refRBSheet.current.close()} />}
+        {view && <EditPassWord close={() => refRBSheet.current.close()} />}
+      </RBSheet>
     </SafeAreaView>
   );
 }

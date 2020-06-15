@@ -8,6 +8,7 @@ import {
   heightPercentageToDP,
 } from 'react-native-responsive-screen';
 import Beacon from '../src/Screens/Beacon';
+import PdfViewer from '../src/Screens/PdfViewr';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,33 @@ function BeaconRoute({navigation}) {
           ),
         }}
         component={Beacon}
+      />
+      <Stack.Screen
+        name="pdf"
+        options={{
+          title: 'Beacon',
+          headerTintColor: '#fff',
+          headerStyle: {
+            backgroundColor: '#000',
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('HomePages');
+              }}>
+              <Image
+                source={require('../assets//output-onlinepngtools.png')}
+                style={{
+                  width: widthPercentageToDP('30%'),
+                  height: heightPercentageToDP('6Z%'),
+                  // paddingRight: 23,
+                }}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          ),
+        }}
+        component={PdfViewer}
       />
     </Stack.Navigator>
   );

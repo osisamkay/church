@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  ImageBackground,
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {
@@ -27,25 +28,27 @@ const Homepage = ({navigation}) => {
 
   const data = [
     {
-      pic:
-        'https://image.shutterstock.com/image-photo/beautiful-autumn-scene-hintersee-lake-260nw-747646759.jpg',
+      pic: 'https://i.ibb.co/LP43vKD/church1.jpg',
     },
     {
-      pic:
-        'https://image.shutterstock.com/image-photo/beautiful-autumn-scene-hintersee-lake-260nw-747646759.jpg',
+      pic: 'https://i.ibb.co/5RC0Fg7/church2.jpg',
     },
     {
-      pic:
-        'https://image.shutterstock.com/image-photo/beautiful-autumn-scene-hintersee-lake-260nw-747646759.jpg',
+      pic: 'https://i.ibb.co/zJnJ7p3/church3.jpg',
     },
     {
-      pic:
-        'https://image.shutterstock.com/image-photo/beautiful-autumn-scene-hintersee-lake-260nw-747646759.jpg',
+      pic: 'https://i.ibb.co/NNVL1pm/church4.jpg',
+    },
+    {
+      pic: 'https://i.ibb.co/FsB2RBJ/church5.jpg',
+    },
+    {
+      pic: 'https://i.ibb.co/MGRFkGT/church6.jpg',
     },
   ];
 
   const Data = [
-    {title: 'Devotional'},
+    {title: 'In His Presence'},
     {title: 'Beacon'},
     {title: 'Media'},
     {title: 'Podcast'},
@@ -71,6 +74,7 @@ const Homepage = ({navigation}) => {
                     source={{
                       uri: datas.pic,
                     }}
+                    // source={require(`${datas.pic}`)}
                     style={{height: 200, width}}
                   />
                 </View>
@@ -80,7 +84,7 @@ const Homepage = ({navigation}) => {
         }
         style={styles.slider} //Main slider container style
         height={200} //Height of your slider
-        slideCount={4} //How many views you are adding to slide
+        slideCount={data.length} //How many views you are adding to slide
         dots={true} // Pagination dots visibility true for visibile
         dotActiveColor="white" //Pagination dot active color
         dotInactiveColor="gray" // Pagination do inactive color
@@ -88,50 +92,56 @@ const Homepage = ({navigation}) => {
         autoSlide={false} //The views will slide automatically
         slideInterval={5000} //In Miliseconds
       />
-      <ScrollView contentContainerStyle={styles.botcontainer}>
-        {Data.map(data => {
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                data.title === 'Devotional'
-                  ? navigation.navigate('Devotional')
-                  : data.title === 'Media'
-                  ? navigation.navigate('Media')
-                  : data.title === 'Podcast'
-                  ? navigation.navigate('Podcast')
-                  : data.title === 'Events'
-                  ? navigation.navigate('Events')
-                  : data.title === 'Church Units'
-                  ? navigation.navigate('Units')
-                  : data.title === 'Beacon'
-                  ? navigation.navigate('Beacon')
-                  : '';
-              }}>
-              <Card style={styles.drawerCards}>
-                <Icons
-                  name={
-                    data.title === 'Media'
-                      ? 'ios-play-circle'
-                      : data.title === 'Podcast'
-                      ? 'ios-headset'
-                      : data.title === 'Devotional'
-                      ? 'ios-bookmarks'
-                      : data.title === 'Offering'
-                      ? 'ios-cash'
-                      : data.title === 'Church Units'
-                      ? 'md-people'
-                      : data.title === 'Events'
-                      ? 'ios-calendar'
-                      : 'ios-people'
-                  }
-                  size={60}
-                />
-                <Text style={styles.Label}>{data.title}</Text>
-              </Card>
-            </TouchableOpacity>
-          );
-        })}
-      </ScrollView>
+      <ImageBackground
+        source={require('../../assets/church5.jpeg')}
+        style={styles.image}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.botcontainer}>
+          {Data.map(data => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  data.title === 'In His Presence'
+                    ? navigation.navigate('Devotional')
+                    : data.title === 'Media'
+                    ? navigation.navigate('Media')
+                    : data.title === 'Podcast'
+                    ? navigation.navigate('Podcast')
+                    : data.title === 'Events'
+                    ? navigation.navigate('Events')
+                    : data.title === 'Church Units'
+                    ? navigation.navigate('Units')
+                    : data.title === 'Beacon'
+                    ? navigation.navigate('Beacon')
+                    : '';
+                }}>
+                <View style={styles.drawerCards}>
+                  <Icons
+                    name={
+                      data.title === 'Media'
+                        ? 'ios-play-circle'
+                        : data.title === 'Podcast'
+                        ? 'ios-headset'
+                        : data.title === 'In His Presence'
+                        ? 'ios-bookmarks'
+                        : data.title === 'Offering'
+                        ? 'ios-cash'
+                        : data.title === 'Church Units'
+                        ? 'md-people'
+                        : data.title === 'Events'
+                        ? 'ios-calendar'
+                        : 'ios-people'
+                    }
+                    size={60}
+                  />
+                  <Text style={styles.Label}>{data.title}</Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -189,10 +199,26 @@ const styles = StyleSheet.create({
   drawerCards: {
     width: widthPercentageToDP('40%'),
     height: heightPercentageToDP('20%'),
-    borderRadius: 5,
+    // borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 23,
+    backgroundColor: 'rgba(255,255,255,.25)',
+    shadowColor: 'rgba(0,0,0,.3)',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+  },
+  image: {
+    flex: 1,
+
+    resizeMode: 'contain',
+    justifyContent: 'center',
   },
 });
 
