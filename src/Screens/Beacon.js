@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,47 +16,51 @@ import {
 import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import useBeacons from './hooks/useBeacons';
+import Moment from 'react-moment';
+import Loader from 'react-native-multi-loader';
 
-const data = [
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-    source: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-  },
-];
-
-export default function Beacon({navigation}) {
+export default function Beacon() {
+  const [filter, setFilter] = useState(' ');
+  const [loading, setLoading, getBeacon, beacon] = useBeacons();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getBeacon();
+  });
+  const filteredItems = beacon.filter(item =>
+    item.title.toLocaleLowerCase().includes(filter.toLocaleLowerCase()),
+  );
   return (
     <SafeAreaView style={{flex: 1}}>
       <Item rounded style={styles.search}>
         <Icon name="ios-search" />
-        <Input placeholder="Search Beacon" />
+        <Input
+          placeholder="Search Beacon"
+          value={filter}
+          onChangeText={val => {
+            setFilter(val);
+          }}
+        />
         <Icon name="ios-arrow-round-forward" />
       </Item>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
-          {data.map(data => {
+          {filteredItems.map(data => {
             return (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('pdf');
+                  navigation.navigate('pdf', {file: data.file});
                 }}>
                 <Card style={styles.card}>
                   <View style={styles.details}>
                     <View>
                       <Text style={styles.title}>{data.title}</Text>
-                      {/* <Text
-                      numberOfLines={3}
-                      ellipsizeMode="tail"
-                      style={styles.body}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s,
-                    </Text> */}
                     </View>
                     <View style={styles.next}>
-                      <Text>20/12/2020</Text>
+                      <Moment element={Text} fromNow>
+                        {data.time}
+                      </Moment>
                       <Icons name="long-arrow-right" size={25} />
                     </View>
                   </View>
@@ -66,6 +70,13 @@ export default function Beacon({navigation}) {
           })}
         </View>
       </ScrollView>
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
+      />
     </SafeAreaView>
   );
 }

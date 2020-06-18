@@ -15,61 +15,31 @@ import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
 import Iconss from 'react-native-vector-icons/MaterialCommunityIcons';
-
-const data = [
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Faithfulness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-];
+import {useNavigation} from '@react-navigation/native';
+import usePodcast from './hooks/usePodcast';
+import Loader from 'react-native-multi-loader';
 
 const Podcast = () => {
+  const [loading, setLoading, getPodcast, podcast] = usePodcast();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getPodcast();
+  });
   return (
     <SafeAreaView style={{flex: 1}}>
       <Item rounded style={styles.search}>
         <Icon name="ios-search" />
-        <Input placeholder="Search Devotional" />
+        <Input placeholder="Search Podcast" />
         <Icon name="ios-arrow-round-forward" />
       </Item>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
-          {data.map(data => {
+          {podcast.map(data => {
             return (
               <Card style={styles.card}>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={require('../../assets/Joshua-1-9.jpg')}
+                    source={require('../../assets/podcast.png')}
                     style={styles.image}
                     resizeMode="stretch"
                   />
@@ -81,9 +51,7 @@ const Podcast = () => {
                       numberOfLines={3}
                       ellipsizeMode="tail"
                       style={styles.body}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s,
+                      {data.description}
                     </Text>
                   </View>
 
@@ -101,6 +69,13 @@ const Podcast = () => {
           })}
         </View>
       </ScrollView>
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
+      />
     </SafeAreaView>
   );
 };

@@ -8,67 +8,20 @@ import {
   Transition,
 } from 'react-native-toast-banner';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import useEvents from './hooks/useEvents';
+
+import Loader from 'react-native-multi-loader';
 
 let {width} = Dimensions.get('window');
 
 const Events = () => {
   const {showBanner, hideBanner} = useToastBannerToggler();
-  const events = [
-    {
-      start: '2017-09-06 22:30:00',
-      end: '2017-09-06 23:30:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-07 00:30:00',
-      end: '2017-09-07 01:30:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-07 01:30:00',
-      end: '2017-09-07 02:20:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-07 04:10:00',
-      end: '2017-09-07 04:40:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-07 01:05:00',
-      end: '2017-09-07 01:45:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-07 14:30:00',
-      end: '2017-09-07 16:30:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-08 01:20:00',
-      end: '2017-09-08 02:20:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-08 04:10:00',
-      end: '2017-09-08 04:40:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-    {
-      start: '2017-09-08 00:45:00',
-      end: '2017-09-08 01:45:00',
-      title: 'Dr. Mariana Joseph',
-      summary: '3412 Piedmont Rd NE, GA 3032',
-    },
-  ];
+  const [loading, setLoading, getEvents, events] = useEvents();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getEvents();
+  });
 
   function _eventTapped(event) {
     // alert(JSON.stringify(event));
@@ -78,9 +31,10 @@ const Events = () => {
       contentView: (
         <View style={{padding: 40}}>
           <Text style={styles.info}>Title: {title.title}</Text>
-          <Text style={styles.info}>Summary: {title.summary}</Text>
+          <Text style={styles.info}>Theme: {title.summary}</Text>
           <Text style={styles.info}>Start: {title.start}</Text>
           <Text style={styles.info}>End: {title.end}</Text>
+          <Text style={styles.info}>Venue: {title.Venue}</Text>
         </View>
       ),
       backgroundColor: '#787878' /* default: undefined */,
@@ -93,6 +47,13 @@ const Events = () => {
       disableHideOnPress: true,
     });
   }
+
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
   return (
     <View style={{flex: 1, marginTop: 20}}>
       <EventCalendar
@@ -100,8 +61,15 @@ const Events = () => {
         events={events}
         width={width}
         numberOfDay={60}
-        initDate={'2017-09-07'}
+        initDate={today}
         scrollToFirst
+      />
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
       />
     </View>
   );

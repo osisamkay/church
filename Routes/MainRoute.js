@@ -18,13 +18,17 @@ import AboutRoute from './AboutRoute';
 import ProfileRoute from './ProfileRoute';
 import SettingsRoute from './SettingsRoute';
 import PaymentRoute from './PaymentRoute';
+import Onboard from '../src/Screens/Onboarding/Onboard';
+import LoginScreen from '../src/Screens/Onboarding/Login/LoginScreen';
+import SignUpScreen from '../src/Screens/Onboarding/SignUp/SignUpScreen';
 
 const Stack = createStackNavigator();
 
 function Main({navigation}) {
   return (
     <Stack.Navigator
-      initialRouteName="HomePages"
+      // initialRouteName="HomePages"
+      initialRouteName="OnBoarding"
       screenOptions={{headerTitleAlign: 'center'}}>
       <Stack.Screen
         name="HomePages"
@@ -132,6 +136,27 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={PaymentRoute}
+      />
+      <Stack.Screen
+        name="OnBoarding"
+        options={{
+          headerShown: false,
+        }}
+        component={Onboard}
+      />
+      <Stack.Screen
+        name="login"
+        options={{
+          headerShown: false,
+        }}
+        component={LoginScreen}
+      />
+      <Stack.Screen
+        name="signIn"
+        options={{
+          headerShown: false,
+        }}
+        component={SignUpScreen}
       />
     </Stack.Navigator>
   );

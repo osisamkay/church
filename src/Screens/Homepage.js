@@ -89,7 +89,7 @@ const Homepage = ({navigation}) => {
         dotActiveColor="white" //Pagination dot active color
         dotInactiveColor="gray" // Pagination do inactive color
         dotsContainerStyle={styles.dotContainer} // Container style of the pagination dots
-        autoSlide={true} //The views will slide automatically
+        autoSlide={false} //The views will slide automatically
         slideInterval={5000} //In Miliseconds
       />
       <ImageBackground
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 23,
     borderBottomColor: 'rgba(255, 255, 255, .25)',
+    backgroundColor: 'rgba(0,0,0,.45)',
   },
   name: {
     fontFamily: 'GT Walsheim Pro Regular Regular',
@@ -199,12 +200,12 @@ const styles = StyleSheet.create({
   drawerCards: {
     width: widthPercentageToDP('40%'),
     height: heightPercentageToDP('20%'),
-    // borderRadius: 2,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 23,
-    backgroundColor: 'rgba(255,255,255,.25)',
-    shadowColor: 'rgba(0,0,0,.3)',
+    backgroundColor: 'rgba(255,255,255,.7)',
+    shadowColor: 'rgba(0,0,0,.1)',
     shadowOffset: {
       width: 0,
       height: 1,

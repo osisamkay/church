@@ -2,12 +2,13 @@ import React from 'react';
 import {StyleSheet, Dimensions, Text, View} from 'react-native';
 import Pdf from 'react-native-pdf';
 
-export default function PdfViewer() {
-  // const source = {
-  //   uri: '../../assets/l.pdf',
-  //   cache: true,
-  // };
-  const source = require('../../assets/l.pdf');
+export default function PdfViewer({route}) {
+  const {file} = route.params;
+  console.log(file);
+  // const source = require('../../assets/l.pdf');
+  const source = {
+    uri: `${file}`,
+  };
   return (
     <View style={styles.container}>
       {/* <Text>hguyguhhj</Text> */}

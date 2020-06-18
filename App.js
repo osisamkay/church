@@ -12,6 +12,16 @@ import {
   Transition,
 } from 'react-native-toast-banner';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import createSagaMiddleware from 'redux-saga';
+import {persistStore, persistReducer} from 'redux-persist';
+import {PersistGate} from 'redux-persist/integration/react';
+import saga from './src/saga/rootSaga';
+import AsyncStorage from '@react-native-community/async-storage';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import {rootReducer} from './src/reducer/rootReducer';
+import {Root} from 'native-base';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,13 +46,32 @@ function App({navigation}) {
   );
 }
 
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  stateReconciler: autoMergeLevel2,
+  blacklist: ['SignUpReducer'],
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+const sagaMiddleware = createSagaMiddleware();
+let store = createStore(persistedReducer, applyMiddleware(sagaMiddleware));
+let persistor = persistStore(store);
+// const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(saga);
+
 export default () => {
   return (
-    <SafeAreaProvider>
-      <ToastBannerProvider>
-        <App />
-        <ToastBannerPresenter />
-      </ToastBannerProvider>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Root>
+          <SafeAreaProvider>
+            <ToastBannerProvider>
+              <App />
+              <ToastBannerPresenter />
+            </ToastBannerProvider>
+          </SafeAreaProvider>
+        </Root>
+      </PersistGate>
+    </Provider>
   );
 };

@@ -14,46 +14,17 @@ import {
 import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/FontAwesome';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
-
-const data = [
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Love",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Faithfulness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Kindness",
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-];
+import useDevotion from './hooks/useDevotion';
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 const Devotional = () => {
+  const [loading, setLoading, getDevotion, devotion] = useDevotion();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getDevotion();
+  });
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Item rounded style={styles.search}>
@@ -63,12 +34,12 @@ const Devotional = () => {
       </Item>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
-          {data.map(data => {
+          {devotion.map(data => {
             return (
               <Card style={styles.card}>
                 <View style={styles.imageContainer}>
                   <Image
-                    source={require('../../assets/Joshua-1-9.jpg')}
+                    source={{uri: `${data.cover_photo}`}}
                     style={styles.image}
                     resizeMode="stretch"
                   />
@@ -80,13 +51,12 @@ const Devotional = () => {
                       numberOfLines={3}
                       ellipsizeMode="tail"
                       style={styles.body}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s,
+                      {data.description}
                     </Text>
                   </View>
                   <View style={styles.next}>
-                    <Text>20/12/2020</Text>
+                    <Text>{moment(data.created_at).fromNow()}</Text>
+
                     <Icons name="long-arrow-right" size={25} />
                   </View>
                 </View>
@@ -117,6 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 3,
+    backgroundColor: 'grey',
   },
   group: {
     alignItems: 'center',
