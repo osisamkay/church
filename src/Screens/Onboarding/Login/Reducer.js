@@ -17,6 +17,7 @@ const {
   GET_AGG,
   PLAYER_CALLED,
   ONE_SIGNAL,
+  DATA,
 } = actionType;
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   tailor_category_id: 0,
   collected_data: null,
   agg: 0,
+  mediaData: {},
 };
 
 export const LoginReducer = (state = initialState, {type, payload}) => {
@@ -84,6 +86,9 @@ export const LoginReducer = (state = initialState, {type, payload}) => {
 
     case ONE_SIGNAL:
       return {...state, signal: true, Notification: payload};
+
+    case DATA:
+      return {...state, mediaData: payload};
 
     case LOGOUT_USER:
       return {

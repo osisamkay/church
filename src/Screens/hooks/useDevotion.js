@@ -28,11 +28,9 @@ export default () => {
           Authorization: 'Bearer ' + access_token,
         },
       });
-      console.log(response);
       let s = response.data.status;
       let m = response.data.message;
       if (s) {
-        console.log(response.data.data);
         setevotion(response.data.data);
         setLoading(false);
       } else {

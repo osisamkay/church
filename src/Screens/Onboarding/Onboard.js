@@ -29,7 +29,11 @@ const Onboard = ({navigation}) => {
     }
   }, [isLogged, navigation]);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: '#000'}}>
+      <Image
+        source={require('../../../assets/output-onlinepngtools.png')}
+        style={styles.logo}
+      />
       <ImageBackground
         source={require('../../../assets/church1.jpeg')}
         resizeMode="cover"
@@ -44,13 +48,9 @@ const Onboard = ({navigation}) => {
         <View style={styles.veil} />
       </ImageBackground>
       <ScrollView contentContainerStyle={styles.container}>
-        <Image
-          source={require('../../../assets/output-onlinepngtools.png')}
-          style={styles.logo}
-        />
         <Text style={styles.Text}>
-          Headquarters of heaven on earth. Where God is raising Kingdom minded
-          people with a passion for excellence in life
+          Headquarters of heaven. Where God is raising Kingdom minded people
+          with a passion for excellence in life
         </Text>
         <View style={styles.btnContainer}>
           <Button
@@ -102,6 +102,8 @@ const styles = StyleSheet.create({
   logo: {
     width: widthPercentageToDP('40%'),
     height: heightPercentageToDP('12%'),
+    alignSelf: 'center',
+    margin: heightPercentageToDP('5%'),
   },
   Text: {
     color: 'white',

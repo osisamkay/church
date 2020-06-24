@@ -19,7 +19,7 @@ function PodcastRoute({navigation}) {
       <Stack.Screen
         name="Podcast"
         options={{
-          title: 'Podcast',
+          title: 'Sermon',
           headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#000',

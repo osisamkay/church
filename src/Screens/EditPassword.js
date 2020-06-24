@@ -1,19 +1,19 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {SettingsInfoData} from '../Components/SettingsInfoData';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import Inputs from '../Components/Inputs';
-import {ScrollView} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {Button} from 'react-native-elements';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
-export default function EditPassWord({close}) {
+export default function EditPassWord({close, textInput}) {
+  const [status, setStatus] = useState(false);
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <Inputs placeholders="Password" name="lock" right />
+      <Inputs placeholders="Password" name="lock" TextInput={textInput} />
 
       <Button
-        title="Save Profile"
+        title="Change Password"
         raised
         type="clear"
         buttonStyle={styles.Button}

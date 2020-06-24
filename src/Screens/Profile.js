@@ -13,26 +13,38 @@ import {
 } from 'react-native-responsive-screen';
 import {Avatar} from 'react-native-elements';
 import {Button} from 'react-native-elements';
+import {useNavigation} from '@react-navigation/native';
+import useProfile from './hooks/useProfile';
+import Loader from 'react-native-multi-loader';
 
-const ProfileData = [
-  {name: 'John', title: 'First Name'},
-  {name: 'Baptist', title: 'Last Name'},
-  {name: 'info@unilagchapel.org', title: 'Email'},
-  {name: '+234 704 550 6251', title: 'Number'},
-  {
-    name: 'Danfodio Boulevard, University of Lagos, Akoka, Yaba, Lagos.',
-    title: 'Address',
-  },
-  {name: 'Male', title: 'Gender'},
-];
-
-export default function Profile({navigation}) {
+export default function Profile({}) {
+  const [loading, setLoading, getProfile, profile] = useProfile();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getProfile();
+  });
+  const ProfileData = [
+    {name: profile.name, title: 'Name'},
+    {name: profile.email, title: 'Email'},
+    {name: profile.phone, title: 'Number'},
+    {
+      name: profile.address,
+      title: 'Address',
+    },
+  ];
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
       <View>
         <Avatar
           size={120}
           rounded
+          source={
+            profile.avatar === null
+              ? null
+              : {
+                  uri: profile.avatar,
+                }
+          }
           icon={{name: 'user', type: 'font-awesome', color: 'black'}}
           onPress={() => console.log('Works!')}
           activeOpacity={1}
@@ -61,6 +73,13 @@ export default function Profile({navigation}) {
           }}
         />
       </ScrollView>
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
+      />
     </SafeAreaView>
   );
 }

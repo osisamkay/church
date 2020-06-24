@@ -14,14 +14,18 @@ import {useNavigation} from '@react-navigation/native';
 import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
+import {logoutUser} from './src/Screens/Onboarding/Login/Action/Action';
 
 const Data = [
   {title: 'About'},
   {title: 'Profile'},
-  {title: 'Events'},
-  {title: 'Offering'},
+  {title: 'Ministers'},
+  {title: 'Online Giving'},
   {title: 'Notification'},
   {title: 'Settings'},
+  {title: 'Events'},
+  {title: 'Logout'},
 ];
 
 function CustomDrawerContent({progress, navigation, ...rest}) {
@@ -30,8 +34,11 @@ function CustomDrawerContent({progress, navigation, ...rest}) {
   //   // getProfile();
   // });
 
-  const pix = {
-    // uri: profile.profile_pix,
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(logoutUser());
+    navigation.navigate('login');
   };
   return (
     <DrawerContentScrollView {...rest}>
@@ -62,10 +69,16 @@ function CustomDrawerContent({progress, navigation, ...rest}) {
                     ? navigation.navigate('Settings')
                     : data.title === 'Events'
                     ? navigation.navigate('Events')
-                    : data.title === 'Offering'
+                    : data.title === 'Online Giving'
                     ? navigation.navigate('Offering')
-                    : data.title === 'Beacon'
-                    ? navigation.navigate('Beacon')
+                    : data.title === 'Events'
+                    ? navigation.navigate('Events')
+                    : data.title === 'Notification'
+                    ? navigation.navigate('Notifications')
+                    : data.title === 'Ministers'
+                    ? navigation.navigate('Ministers')
+                    : data.title === 'Logout'
+                    ? logout()
                     : '';
                 }}>
                 <Card style={styles.drawerCards}>
@@ -77,13 +90,15 @@ function CustomDrawerContent({progress, navigation, ...rest}) {
                         ? 'ios-people'
                         : data.title === 'Profile'
                         ? 'ios-briefcase'
-                        : data.title === 'Offering'
+                        : data.title === 'Online Giving'
                         ? 'ios-cash'
                         : data.title === 'Notification'
                         ? 'ios-notifications'
+                        : data.title === 'Ministers'
+                        ? 'ios-person'
                         : data.title === 'Events'
                         ? 'ios-calendar'
-                        : 'ios-people'
+                        : 'ios-exit'
                     }
                     size={60}
                   />
@@ -114,7 +129,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 23,
+    padding: 28,
     borderBottomColor: 'rgba(255, 255, 255, .25)',
   },
   name: {

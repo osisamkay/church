@@ -18,12 +18,7 @@ import Inputs from '../../../Components/Inputs';
 import {Button} from 'react-native-elements';
 import {SignInDest} from './SignUpDetails';
 import {registerUser} from './Action/Action';
-import {
-  ToastBannerProvider,
-  ToastBannerPresenter,
-  useToastBannerToggler /* or withToastBannerToggler */,
-  Transition,
-} from 'react-native-toast-banner';
+import {useToastBannerToggler} from 'react-native-toast-banner';
 
 export default function SignUpScreen({navigation}) {
   const [values, setValues] = useState({});

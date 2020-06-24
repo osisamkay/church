@@ -14,28 +14,22 @@ import {
 } from 'react-native-responsive-screen';
 import {Card, CardItem, Body, Footer} from 'native-base';
 import Icons from 'react-native-vector-icons/FontAwesome';
-import Iconss from 'react-native-vector-icons/MaterialCommunityIcons';
+import Iconss from 'react-native-vector-icons/Entypo';
 import {Container, Header, Item, Input, Icon, Button} from 'native-base';
 import YouTube from 'react-native-youtube';
 import {YouTubeStandaloneAndroid} from 'react-native-youtube';
+import UseMedia from './hooks/UseMedia';
+import {useNavigation} from '@react-navigation/native';
+import {Thumbnail} from 'react-native-thumbnail-video';
+import Loader from 'react-native-multi-loader';
 
-const data = [
-  {
-    title: "God's Love",
-    id: 'PNKCMlCyspk',
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-  {
-    title: "God's Love",
-    id: 'glZLuHVqcOk',
-    desc:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-  },
-];
-
-const Devotional = ({navigation}) => {
+const Devotional = ({}) => {
   // const [id, setId] = useState(' ');
+  const [loading, setLoading, getMedia, media] = UseMedia();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getMedia();
+  });
 
   const Onclick = id => {
     YouTubeStandaloneAndroid.playVideo({
@@ -51,18 +45,23 @@ const Devotional = ({navigation}) => {
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
-          {data.map(data => {
+          {media.map(data => {
+            console.log(data);
             return (
               <TouchableOpacity
-                style={styles.card}
+                activeOpacity={1}
                 onPress={() => {
-                  Onclick(data.id);
-                }}>
+                  Onclick(data.video_link);
+                }}
+                style={styles.card}>
                 <View style={styles.imageContainer}>
-                  <Image
-                    source={require('../../assets/Joshua-1-9.jpg')}
-                    style={styles.image}
-                    resizeMode="stretch"
+                  <Thumbnail
+                    url={`https://www.youtube.com/watch?v=${data.video_link}`}
+                    containerStyle={styles.image}
+                    showPlayIcon={false}
+                    onPress={() => {
+                      null;
+                    }}
                   />
                 </View>
                 <View style={styles.details}>
@@ -72,18 +71,23 @@ const Devotional = ({navigation}) => {
                       numberOfLines={3}
                       ellipsizeMode="tail"
                       style={styles.body}>
-                      Luke 10:27-37
+                      {data.description}
                     </Text>
                   </View>
                   <View style={styles.next}>
-                    <Iconss name="star-circle" size={40} />
                     <Icons
                       name="play-circle"
                       size={40}
                       onPress={() => {
-                        Onclick(data.id);
+                        Onclick(data.video_link);
                       }}
                     />
+                    {data.type === 'Live' && (
+                      <Text style={{padding: 10, color: 'red'}}>
+                        <Iconss name="dot-single" size={20} color="red" />
+                        Live
+                      </Text>
+                    )}
                   </View>
                 </View>
               </TouchableOpacity>
@@ -98,6 +102,13 @@ const Devotional = ({navigation}) => {
           <Icon name="ios-arrow-round-forward" />
         </Item>
       </Card>
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
+      />
     </SafeAreaView>
   );
 };
@@ -108,12 +119,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // imageContainer: {
-  //   height: heightPercentageToDP('20%'),
-  //   width: widthPercentageToDP('40%'),
-  //   // backgroundColor: 'grey',
-  //   padding: 7,
-  // },
+  imageContainer: {
+    // backgroundColor: 'grey',
+    zIndex: -1111,
+  },
   image: {
     height: heightPercentageToDP('25%'),
     width: widthPercentageToDP('85%'),
@@ -125,6 +134,7 @@ const styles = StyleSheet.create({
     top: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    zIndex: -1,
   },
   group: {
     alignItems: 'center',
@@ -188,5 +198,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: widthPercentageToDP('23%'),
+    alignItems: 'center',
   },
 });

@@ -20,7 +20,7 @@ function DevotionalRoute({navigation}) {
       <Stack.Screen
         name="Devotional"
         options={{
-          title: 'Devotional',
+          title: 'In His Presence',
           headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#000',

@@ -22,10 +22,58 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {rootReducer} from './src/reducer/rootReducer';
 import {Root} from 'native-base';
+import * as eva from '@eva-design/eva';
+import {ApplicationProvider, Layout, Text} from '@ui-kitten/components';
+import OneSignal from 'react-native-onesignal';
+import useOnesignal from './useOnesignal';
 
 const Drawer = createDrawerNavigator();
 
 function App({navigation}) {
+  const [notificationPush] = useOnesignal();
+  OneSignal.setLogLevel(6, 0);
+
+  // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
+  OneSignal.init('91ef96ec-2b78-4e4e-bef6-507dc5600603', {
+    kOSSettingsKeyAutoPrompt: false,
+    kOSSettingsKeyInAppLaunchURL: false,
+    kOSSettingsKeyInFocusDisplayOption: 2,
+  });
+  OneSignal.inFocusDisplaying(2); // Controls what should happen if a notification is received while the app is open. 2 means that the notification will go directly to the device's notification center.
+
+  // The promptForPushNotifications function code will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step below)
+  OneSignal.promptForPushNotificationsWithUserResponse(myiOSPromptCallback);
+
+  OneSignal.addEventListener('received', onReceived);
+  OneSignal.addEventListener('opened', onOpened);
+  OneSignal.addEventListener('ids', onIds);
+
+  // useEffect(() => {
+  //   OneSignal.addEventListener('received', onReceived);
+  //   OneSignal.addEventListener('opened', onOpened);
+  //   OneSignal.addEventListener('ids', onIds);
+  // }, []);
+
+  function onReceived(notification) {
+    console.log('Notification received: ', notification);
+  }
+
+  function onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+    // this.props.navigation.navigate('Request Notification');
+    notificationPush(openResult);
+  }
+
+  function onIds(device) {
+    console.log('Device info: ', device);
+  }
+
+  function myiOSPromptCallback(permission) {
+    // do something with permission value
+  }
   return (
     <NavigationContainer>
       <Drawer.Navigator
@@ -66,8 +114,10 @@ export default () => {
         <Root>
           <SafeAreaProvider>
             <ToastBannerProvider>
-              <App />
-              <ToastBannerPresenter />
+              <ApplicationProvider {...eva} theme={eva.light}>
+                <App />
+                <ToastBannerPresenter />
+              </ApplicationProvider>
             </ToastBannerProvider>
           </SafeAreaProvider>
         </Root>

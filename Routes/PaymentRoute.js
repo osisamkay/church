@@ -19,7 +19,7 @@ function PaymentRoute({navigation}) {
       <Stack.Screen
         name="Offering"
         options={{
-          title: 'Offering',
+          title: 'Online Giving',
           headerTintColor: '#fff',
           headerStyle: {
             backgroundColor: '#000',

@@ -21,6 +21,11 @@ import PaymentRoute from './PaymentRoute';
 import Onboard from '../src/Screens/Onboarding/Onboard';
 import LoginScreen from '../src/Screens/Onboarding/Login/LoginScreen';
 import SignUpScreen from '../src/Screens/Onboarding/SignUp/SignUpScreen';
+import PlayerRoute from './PlayerRoute';
+import OurServiceRoute from './OurServiceRoute';
+import MinistersRoute from './MinistersRoute';
+import NotificationRoute from './NotificationRoute';
+import QuizRoute from './QuizRoute';
 
 const Stack = createStackNavigator();
 
@@ -96,6 +101,13 @@ function Main({navigation}) {
         component={EventRoute}
       />
       <Stack.Screen
+        name="OurServices"
+        options={{
+          headerShown: false,
+        }}
+        component={OurServiceRoute}
+      />
+      <Stack.Screen
         name="Units"
         options={{
           headerShown: false,
@@ -122,6 +134,13 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={ProfileRoute}
+      />
+      <Stack.Screen
+        name="Ministers"
+        options={{
+          headerShown: false,
+        }}
+        component={MinistersRoute}
       />
       <Stack.Screen
         name="Settings"
@@ -157,6 +176,27 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={SignUpScreen}
+      />
+      <Stack.Screen
+        name="Player"
+        options={{
+          headerShown: false,
+        }}
+        component={PlayerRoute}
+      />
+      <Stack.Screen
+        name="Notifications"
+        options={{
+          headerShown: false,
+        }}
+        component={NotificationRoute}
+      />
+      <Stack.Screen
+        name="Quiz"
+        options={{
+          headerShown: false,
+        }}
+        component={QuizRoute}
       />
     </Stack.Navigator>
   );

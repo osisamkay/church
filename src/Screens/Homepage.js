@@ -19,13 +19,16 @@ import ViewSlider from 'react-native-view-slider';
 import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 
 const Homepage = ({navigation}) => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
-
+  const {userData, isLogged, playerCalled, signal} = useSelector(
+    state => state.LoginReducer,
+  );
   const data = [
     {
       pic: 'https://i.ibb.co/LP43vKD/church1.jpg',
@@ -47,13 +50,20 @@ const Homepage = ({navigation}) => {
     },
   ];
 
+  useEffect(() => {
+    if (signal) {
+      navigation.navigate('Notifications');
+    }
+  }, [navigation, signal]);
+
   const Data = [
     {title: 'In His Presence'},
     {title: 'Beacon'},
     {title: 'Media'},
-    {title: 'Podcast'},
-    {title: 'Events'},
+    {title: 'Sermons'},
+    {title: 'Our Services'},
     {title: 'Church Units'},
+    {title: 'Quiz'},
   ];
 
   return (
@@ -106,14 +116,16 @@ const Homepage = ({navigation}) => {
                     ? navigation.navigate('Devotional')
                     : data.title === 'Media'
                     ? navigation.navigate('Media')
-                    : data.title === 'Podcast'
+                    : data.title === 'Sermons'
                     ? navigation.navigate('Podcast')
-                    : data.title === 'Events'
-                    ? navigation.navigate('Events')
+                    : data.title === 'Our Services'
+                    ? navigation.navigate('OurServices')
                     : data.title === 'Church Units'
                     ? navigation.navigate('Units')
                     : data.title === 'Beacon'
                     ? navigation.navigate('Beacon')
+                    : data.title === 'Quiz'
+                    ? navigation.navigate('Quiz')
                     : '';
                 }}>
                 <View style={styles.drawerCards}>
@@ -121,7 +133,7 @@ const Homepage = ({navigation}) => {
                     name={
                       data.title === 'Media'
                         ? 'ios-play-circle'
-                        : data.title === 'Podcast'
+                        : data.title === 'Sermons'
                         ? 'ios-headset'
                         : data.title === 'In His Presence'
                         ? 'ios-bookmarks'
@@ -129,8 +141,10 @@ const Homepage = ({navigation}) => {
                         ? 'ios-cash'
                         : data.title === 'Church Units'
                         ? 'md-people'
-                        : data.title === 'Events'
+                        : data.title === 'Our Services'
                         ? 'ios-calendar'
+                        : data.title === 'Quiz'
+                        ? 'ios-help-circle'
                         : 'ios-people'
                     }
                     size={60}

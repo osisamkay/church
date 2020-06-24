@@ -45,7 +45,6 @@ export const churchData = [
     desc:
       'Team of volunteers; reaching out to the university of Lagos community with the Gospel of Jesus; responsible to provide guidance for new converts.',
   },
-  {title: 'Money Counting', desc: 'Money Counting'},
   {
     title: 'Music Ministry',
     desc:

@@ -47,6 +47,7 @@ export default function Beacon() {
       <ScrollView style={styles.container}>
         <View style={styles.group}>
           {filteredItems.map(data => {
+            console.log(data);
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -58,9 +59,6 @@ export default function Beacon() {
                       <Text style={styles.title}>{data.title}</Text>
                     </View>
                     <View style={styles.next}>
-                      <Moment element={Text} fromNow>
-                        {data.time}
-                      </Moment>
                       <Icons name="long-arrow-right" size={25} />
                     </View>
                   </View>
@@ -121,6 +119,7 @@ const styles = StyleSheet.create({
     padding: 7,
     justifyContent: 'space-between',
     flexDirection: 'row',
+    alignItems: 'center',
   },
   title: {
     fontSize: heightPercentageToDP('2.25%'),
@@ -134,10 +133,10 @@ const styles = StyleSheet.create({
     // flexShrink: 1,
   },
   next: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    width: widthPercentageToDP('30%'),
-    alignItems: 'center',
+    // justifyContent: 'space-between',
+    // flexDirection: 'row',
+    // width: widthPercentageToDP('30%'),
+    // alignItems: 'center',
   },
   pdf: {
     flex: 1,

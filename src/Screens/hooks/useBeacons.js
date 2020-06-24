@@ -18,7 +18,6 @@ export default () => {
     alignSelf: 'center',
     borderRadius: 6,
   };
-  /**toggle visibility online */
 
   const getBeacon = async () => {
     setLoading(true);

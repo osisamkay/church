@@ -8,6 +8,7 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [online, setOnline] = useState(false);
   const [podcast, setPodcast] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
   const [password, setPassword] = useState('');
 
   const {userData} = useSelector(state => state.LoginReducer);
@@ -57,6 +58,47 @@ export default () => {
       setLoading(false);
     }
   };
+  const getEpisodes = async channel_id => {
+    setLoading(true);
+    try {
+      const response = await Instance.get(
+        `users/podcast/channels/episodes/${channel_id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + access_token,
+          },
+        },
+      );
 
-  return [loading, setLoading, getPodcast, podcast];
+      let s = response.data.status;
+      let m = response.data.message;
+      if (s) {
+        console.log(response.data.data);
+        setEpisodes(response.data.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        Toast.show({
+          text: m,
+          buttonText: 'Okay',
+          position: 'top',
+          type: 'danger',
+          duration: 5000,
+          style: Style,
+        });
+      }
+    } catch (err) {
+      Toast.show({
+        text: err,
+        buttonText: 'Okay',
+        position: 'top',
+        type: 'danger',
+        duration: 5000,
+        style: Style,
+      });
+      setLoading(false);
+    }
+  };
+
+  return [loading, setLoading, getPodcast, podcast, episodes, getEpisodes];
 };

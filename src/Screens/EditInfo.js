@@ -7,11 +7,17 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {Button} from 'react-native-elements';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
-export default function EditInfo({close}) {
+export default function EditInfo({close, TextInput}) {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {SettingsInfoData.map(data => (
-        <Inputs placeholders={data.placeholder} name={data.name} />
+        <Inputs
+          placeholders={data.placeholder}
+          name={data.name}
+          TextInput={val => {
+            TextInput(data.title, val);
+          }}
+        />
       ))}
       <Button
         title="Save Profile"

@@ -44,28 +44,40 @@ export default function Payment() {
         />
       </View>
       <ScrollView contentContainerStyle={styles.below}>
-        <Text style={styles.textt}>
-          Please type in the amout you wish to offer
-        </Text>
-        <Inputs
-          placeholders="10,000"
-          key
-          name="money"
-          TextInput={value => {
-            setAmount(value);
-          }}
-        />
-        <Button
-          title="Save Profile"
-          raised
-          type="clear"
-          buttonStyle={styles.Button}
-          titleStyle={{color: '#fff'}}
-          onPress={() => {
-            // console.log(amount);
-            childRef.current.StartTransaction();
-          }}
-        />
+        <View>
+          <Text style={styles.textt}>
+            Account Name: Chapel of Christ Our Light
+          </Text>
+          <Text style={styles.textt}>Bank: Access Bank Plc</Text>
+          <Text style={styles.textt}>Account Number: 0043661116</Text>
+        </View>
+        {/* <View>
+          <Text style={styles.textt}>OR</Text>
+        </View>
+        <View>
+          <Text style={styles.textt}>
+            Please type in the amout you wish to give
+          </Text>
+          <Inputs
+            placeholders="10,000"
+            key
+            name="money"
+            TextInput={value => {
+              setAmount(value);
+            }}
+          />
+          <Button
+            title="Save Profile"
+            raised
+            type="clear"
+            buttonStyle={styles.Button}
+            titleStyle={{color: '#fff'}}
+            onPress={() => {
+              // console.log(amount);
+              childRef.current.StartTransaction();
+            }}
+          />
+        </View> */}
       </ScrollView>
       <PaystackWebView
         showPayButton={false}
@@ -116,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   below: {
-    height: heightPercentageToDP('70%'),
-    justifyContent: 'space-evenly',
+    height: heightPercentageToDP('60%'),
+    justifyContent: 'center',
   },
 });

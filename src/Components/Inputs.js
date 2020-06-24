@@ -24,14 +24,14 @@ export default function Inputs({TextInput, placeholders, Value, name, color}) {
             <Icon
               name={status ? 'eye' : 'eye-slash'}
               size={24}
-              color="#fff"
+              color={'grey'}
               onPress={() => {
                 setStatus(!status);
               }}
             />
           ) : null
         }
-        secureTextEntry={placeholders === 'Password' && status ? true : false}
+        secureTextEntry={placeholders === 'Password' && !status ? true : false}
         keyboardType={placeholders === 'Number' ? 'numeric' : 'default'}
       />
     </View>
