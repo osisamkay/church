@@ -14,28 +14,37 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import {Card} from 'native-base';
-import Icons from 'react-native-vector-icons/FontAwesome';
-import {Container, Header, Item, Input, Icon, Button} from 'native-base';
-import {churchData} from '../Components/churchUnitData';
 
-export default function Units({navigation}) {
+import Loader from 'react-native-multi-loader';
+import useUnits from './hooks/useUnits';
+import {useNavigation} from '@react-navigation/native';
+
+export default function Units() {
+  const [loading, setLoading, getUnits, units] = useUnits();
+  const navigation = useNavigation();
+  navigation.addListener('focus', () => {
+    getUnits();
+  });
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView style={styles.container}>
         <View style={styles.group}>
-          {churchData.map(data => {
+          {units.map(data => {
+            console.log(data);
             return (
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('unitDetails', {
-                    detail: data.desc,
+                    detail: data.description,
                     title: data.title,
+                    id: data.id,
+                    cover_photo: data.cover_photo,
                   });
                 }}>
                 <Card style={styles.card}>
                   <View style={styles.imageContainer}>
                     <Image
-                      source={require('../../assets/churchLogo.png')}
+                      source={{uri: data.cover_photo}}
                       style={styles.image}
                       resizeMode="stretch"
                     />
@@ -43,12 +52,6 @@ export default function Units({navigation}) {
                   <View style={styles.details}>
                     <View>
                       <Text style={styles.title}>{data.title}</Text>
-                      {/* <Text
-                      //   numberOfLines={3}
-                      //   ellipsizeMode="tail"
-                      style={styles.body}>
-                      {data.desc}
-                    </Text> */}
                     </View>
                   </View>
                 </Card>
@@ -57,6 +60,13 @@ export default function Units({navigation}) {
           })}
         </View>
       </ScrollView>
+      <Loader
+        visible={loading}
+        loaderType="bars"
+        textType="none"
+        sizeLoader="small"
+        sizeText={heightPercentageToDP('1.75%')}
+      />
     </SafeAreaView>
   );
 }
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 3,
+    backgroundColor: 'grey',
   },
   group: {
     alignItems: 'center',
@@ -109,7 +120,6 @@ const styles = StyleSheet.create({
   body: {
     fontSize: heightPercentageToDP('1.525%'),
     width: widthPercentageToDP('47%'),
-    // height: heightPercentageToDP('5%'),
     textAlign: 'justify',
   },
   next: {
