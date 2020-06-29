@@ -14,5 +14,6 @@ export const actionType = {
   GET_AGG: 'GET_AGG',
   PLAYER_CALLED: 'PLAYER_CALLED',
   ONE_SIGNAL: 'ONE_SIGNAL',
+  ONE_SIGNAL_OFF: 'ONE_SIGNAL_OFF',
   DATA: 'DATA',
 };

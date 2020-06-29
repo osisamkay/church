@@ -17,6 +17,7 @@ const {
   GET_AGG,
   PLAYER_CALLED,
   ONE_SIGNAL,
+  ONE_SIGNAL_OFF,
   DATA,
 } = actionType;
 
@@ -86,6 +87,8 @@ export const LoginReducer = (state = initialState, {type, payload}) => {
 
     case ONE_SIGNAL:
       return {...state, signal: true, Notification: payload};
+    case ONE_SIGNAL_OFF:
+      return {...state, signal: false, Notification: payload};
 
     case DATA:
       return {...state, mediaData: payload};

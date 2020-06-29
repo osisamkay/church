@@ -16,6 +16,7 @@ const {
   GET_AGG,
   PLAYER_CALLED,
   ONE_SIGNAL,
+  ONE_SIGNAL_OFF,
   DATA,
 } = actionType;
 
@@ -79,6 +80,10 @@ export const callplayer = payload => ({
 });
 export const signalData = payload => ({
   type: ONE_SIGNAL,
+  payload,
+});
+export const signalOffData = payload => ({
+  type: ONE_SIGNAL_OFF,
   payload,
 });
 export const mediaData = payload => ({

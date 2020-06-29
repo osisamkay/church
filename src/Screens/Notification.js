@@ -14,6 +14,8 @@ import {useNavigation} from '@react-navigation/native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Loader from 'react-native-multi-loader';
 import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {signalOffData} from './Onboarding/Login/Action/Action';
 
 export default function Notifications() {
   const [view, setView] = React.useState(false);
@@ -28,6 +30,7 @@ export default function Notifications() {
   ] = useNotification();
   const refRBSheet = React.useRef();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   navigation.addListener('focus', () => {
     getNotification();
   });
@@ -45,6 +48,7 @@ export default function Notifications() {
                 await ReadNotification(data.id);
                 await setView(data);
                 await refRBSheet.current.open();
+                dispatch(signalOffData('ok'));
               }}
               style={styles.notifyContain}>
               <Icon
