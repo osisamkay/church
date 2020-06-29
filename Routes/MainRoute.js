@@ -26,6 +26,7 @@ import OurServiceRoute from './OurServiceRoute';
 import MinistersRoute from './MinistersRoute';
 import NotificationRoute from './NotificationRoute';
 import QuizRoute from './QuizRoute';
+import AudioRoute from './AudioRoute';
 
 const Stack = createStackNavigator();
 
@@ -197,6 +198,13 @@ function Main({navigation}) {
           headerShown: false,
         }}
         component={QuizRoute}
+      />
+      <Stack.Screen
+        name="Audio"
+        options={{
+          headerShown: false,
+        }}
+        component={AudioRoute}
       />
     </Stack.Navigator>
   );

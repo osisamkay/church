@@ -1,4 +1,4 @@
-package com.unilagchapelapp;
+package com.churchproject;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // import this

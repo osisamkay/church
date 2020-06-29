@@ -77,7 +77,7 @@ export default function Notifications() {
         }}>
         <View style={{padding: 23}}>
           <Text>Title: {view.title}</Text>
-          <Text>Message: {}view.message</Text>
+          <Text>Message: {view.message}</Text>
         </View>
       </RBSheet>
       <Loader

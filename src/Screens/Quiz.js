@@ -46,15 +46,16 @@ export default function Quiz() {
   });
 
   const toggleOverlay = () => {
-    setVisible(!visible);
+    setVisible2(false);
   };
   return (
     <SafeAreaView>
       <ScrollView>
-        {adults.length <= 0 ||
-          (childQuiz.length <= 0 && (
-            <Text style={{textAlign: 'center'}}>No Question Available</Text>
-          ))}
+        {adults.length <= 0 || childQuiz.length <= 0 ? (
+          <Text style={{textAlign: 'center'}}>No Question Available</Text>
+        ) : (
+          ''
+        )}
         {adults.map(data => {
           return (
             <Card>
@@ -121,8 +122,7 @@ export default function Quiz() {
       <Overlay
         overlayStyle={styles.Overlay}
         isVisible={visible}
-        // onBackdropPress={toggleOverlay}
-      >
+        onBackdropPress={toggleOverlay}>
         <Text>Choose your category</Text>
         <Button
           buttonStyle={styles.btn}
@@ -143,8 +143,7 @@ export default function Quiz() {
       <Overlay
         overlayStyle={styles.Overlay}
         isVisible={visible2}
-        // onBackdropPress={toggleOverlay}
-      >
+        onBackdropPress={toggleOverlay}>
         <View>
           <ScrollView contentContainerStyle={{paddingVertical: 10}}>
             <Text>Select a child</Text>
@@ -185,7 +184,7 @@ export default function Quiz() {
           </Item>
           <Button
             buttonStyle={styles.btn}
-            title="Children"
+            title="Add Child"
             onPress={() => {
               let info = {child_name: add};
               addChild(info);

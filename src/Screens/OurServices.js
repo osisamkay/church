@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, View, Text, StyleSheet} from 'react-native';
+import {Dimensions, View, Text, StyleSheet, Image} from 'react-native';
 import EventCalendar from 'react-native-events-calendar';
 import {
   ToastBannerProvider,
@@ -7,13 +7,15 @@ import {
   useToastBannerToggler /* or withToastBannerToggler */,
   Transition,
 } from 'react-native-toast-banner';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import useEvents from './hooks/useEvents';
 
 import Loader from 'react-native-multi-loader';
 import useServices from './hooks/useServices';
-
 let {width} = Dimensions.get('window');
 
 const OurServices = () => {
@@ -55,21 +57,17 @@ const OurServices = () => {
 
   today = yyyy + '-' + mm + '-' + dd;
   return (
-    <View style={{flex: 1, marginTop: 20}}>
-      <EventCalendar
-        eventTapped={_eventTapped}
-        events={events}
-        width={width}
-        numberOfDay={60}
-        initDate={today}
-        scrollToFirst
-      />
-      <Loader
-        visible={loading}
-        loaderType="bars"
-        textType="none"
-        sizeLoader="small"
-        sizeText={heightPercentageToDP('1.75%')}
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        flex: 1,
+      }}>
+      <Image
+        source={require('../../assets/seviceschedule.png')}
+        style={styles.img}
+        resizeMode="contain"
       />
     </View>
   );
@@ -81,5 +79,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: heightPercentageToDP('2.25%'),
     paddingTop: 10,
+  },
+  img: {
+    width: widthPercentageToDP('100%'),
+    height: heightPercentageToDP('50%'),
   },
 });

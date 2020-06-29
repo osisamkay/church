@@ -36,7 +36,7 @@ const Devotional = ({}) => {
       apiKey: 'AIzaSyAM6yfUOmPL2D09Pubk3UYVB1Eruz3Bb5Q',
       videoId: id, // YouTube video ID
       autoplay: true, // Autoplay the video
-      startTime: 120, // Starting point of video (in seconds)
+      modestbranding: true,
     })
       .then(() => console.log('Standalone Player Exited'))
       .catch(errorMessage => console.error(errorMessage));

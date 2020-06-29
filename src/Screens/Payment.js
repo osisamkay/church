@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import ViewSlider from 'react-native-view-slider';
 import {script} from '../Components/paymentScriptures';
@@ -13,44 +14,31 @@ import {
   widthPercentageToDP,
   heightPercentageToDP,
 } from 'react-native-responsive-screen';
-import {Button} from 'react-native-elements';
-import Inputs from '../Components/Inputs';
-import {Value} from 'react-native-reanimated';
+import Carousel, {Pagination} from 'react-native-x-carousel';
 
 export default function Payment() {
   const [amount, setAmount] = useState('');
   const childRef = useRef();
+  const renderItem = data => (
+    <View style={styles.viewBox}>
+      <Text style={styles.text}>{data.verse}</Text>
+    </View>
+  );
   return (
-    <View style={{flex: 1}}>
-      <View>
-        <ViewSlider
-          renderSlides={
-            <>
-              {script.map(datas => {
-                return (
-                  <View style={styles.viewBox}>
-                    <Text style={styles.text}>{datas.verse}</Text>
-                  </View>
-                );
-              })}
-            </>
-          }
-          style={styles.slider} //Main slider container style
-          height={200} //Height of your slider
-          slideCount={script.length} //How many views you are adding to slide
-          dotsContainerStyle={styles.dotContainer} // Container style of the pagination dots
-          autoSlide={true} //The views will slide automatically
-          slideInterval={10000} //In Miliseconds
-        />
-      </View>
+    <View style={{flex: 1, backgroundColor: 'black'}}>
+      <Carousel
+        pagination={Pagination}
+        renderItem={renderItem}
+        data={script}
+        autoplay={true}
+        autoplayInterval={5000}
+      />
       <ScrollView contentContainerStyle={styles.below}>
-        <View>
-          <Text style={styles.textt}>
-            Account Name: Chapel of Christ Our Light
-          </Text>
-          <Text style={styles.textt}>Bank: Access Bank Plc</Text>
-          <Text style={styles.textt}>Account Number: 0043661116</Text>
-        </View>
+        <ImageBackground
+          style={{flex: 1}}
+          resizeMode="stretch"
+          source={require('../../assets/t&o.png')}
+        />
         {/* <View>
           <Text style={styles.textt}>OR</Text>
         </View>
@@ -128,7 +116,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   below: {
-    height: heightPercentageToDP('60%'),
+    height: heightPercentageToDP('40%'),
     justifyContent: 'center',
+    backgroundColor: '#000',
+    marginTop: heightPercentageToDP('10%'),
   },
 });

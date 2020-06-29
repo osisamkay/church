@@ -16,6 +16,7 @@ import {
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import ViewSlider from 'react-native-view-slider';
+import Carousel, {Pagination} from 'react-native-x-carousel';
 import {Card} from 'native-base';
 import Icons from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -57,14 +58,26 @@ const Homepage = ({navigation}) => {
   }, [navigation, signal]);
 
   const Data = [
-    {title: 'In His Presence'},
-    {title: 'Beacon'},
     {title: 'Media'},
     {title: 'Sermons'},
+    {title: 'Audio Livestream'},
+    {title: 'In His Presence'},
+    {title: 'Beacon'},
     {title: 'Our Services'},
     {title: 'Church Units'},
     {title: 'Quiz'},
   ];
+  const renderItem = data => (
+    <View style={styles.viewBox}>
+      <Image
+        source={{
+          uri: data.pic,
+        }}
+        // source={require(`${datas.pic}`)}
+        style={{height: 200, width}}
+      />
+    </View>
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -74,33 +87,12 @@ const Homepage = ({navigation}) => {
         backgroundColor="#000"
         translucent={true}
       />
-      <ViewSlider
-        renderSlides={
-          <>
-            {data.map(datas => {
-              return (
-                <View style={styles.viewBox}>
-                  <Image
-                    source={{
-                      uri: datas.pic,
-                    }}
-                    // source={require(`${datas.pic}`)}
-                    style={{height: 200, width}}
-                  />
-                </View>
-              );
-            })}
-          </>
-        }
-        style={styles.slider} //Main slider container style
-        height={200} //Height of your slider
-        slideCount={data.length} //How many views you are adding to slide
-        dots={true} // Pagination dots visibility true for visibile
-        dotActiveColor="white" //Pagination dot active color
-        dotInactiveColor="gray" // Pagination do inactive color
-        dotsContainerStyle={styles.dotContainer} // Container style of the pagination dots
-        autoSlide={true} //The views will slide automatically
-        slideInterval={5000} //In Miliseconds
+      <Carousel
+        pagination={Pagination}
+        renderItem={renderItem}
+        data={data}
+        autoplay={true}
+        autoplayInterval={5000}
       />
       <ImageBackground
         source={require('../../assets/church5.jpeg')}
@@ -126,6 +118,8 @@ const Homepage = ({navigation}) => {
                     ? navigation.navigate('Beacon')
                     : data.title === 'Quiz'
                     ? navigation.navigate('Quiz')
+                    : data.title === 'Audio Livestream'
+                    ? navigation.navigate('Audio')
                     : '';
                 }}>
                 <View style={styles.drawerCards}>
@@ -134,9 +128,11 @@ const Homepage = ({navigation}) => {
                       data.title === 'Media'
                         ? 'ios-play-circle'
                         : data.title === 'Sermons'
+                        ? 'ios-bookmarks'
+                        : data.title === 'Audio Livestream'
                         ? 'ios-headset'
                         : data.title === 'In His Presence'
-                        ? 'ios-bookmarks'
+                        ? 'md-microphone'
                         : data.title === 'Offering'
                         ? 'ios-cash'
                         : data.title === 'Church Units'
@@ -145,6 +141,8 @@ const Homepage = ({navigation}) => {
                         ? 'ios-calendar'
                         : data.title === 'Quiz'
                         ? 'ios-help-circle'
+                        : data.title === 'Beacon'
+                        ? 'ios-paper'
                         : 'ios-people'
                     }
                     size={60}
@@ -202,7 +200,7 @@ const styles = StyleSheet.create({
   },
   Label: {
     color: '#000',
-    fontSize: heightPercentageToDP('2.6%'),
+    fontSize: heightPercentageToDP('2.4%'),
     fontFamily: 'GT Walsheim Pro Regular Regular',
   },
   imaged: {

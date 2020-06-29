@@ -1,4 +1,4 @@
-package com.unilagchapelapp;
+package com.churchproject;
 
 import android.content.Intent;
 import android.os.Bundle;
